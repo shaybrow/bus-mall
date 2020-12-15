@@ -93,7 +93,7 @@ function clicksPic(event) {
   }
   totalClicks++;
   if (totalClicks === maxClicks) {
-    showResults();
+    calculateResults();
   }
   else {
     container.innerHTML = '';
@@ -102,26 +102,37 @@ function clicksPic(event) {
 
 }
 
-function showResults() {
+function calculateResults() {
   container.removeEventListener('click', clicksPic);
   for (let k = 0; k < notNext.length; k++) {
     allProducts.push(notNext[k]);
   }
-  for (let j = 0; j < allProducts.length; j++) {
-    let li = document.createElement('li');
-    li.textContent = `${allProducts[j].name} was clicked ${allProducts[j].clicked} times and viewed ${allProducts[j].views} times`;
-    results.appendChild(li);
-  }
+  // for (let j = 0; j < allProducts.length; j++) {
+  //   let li = document.createElement('li');
+  //   li.textContent = `${allProducts[j].name} was clicked ${allProducts[j].clicked} times and viewed ${allProducts[j].views} times`;
+  //   results.appendChild(li);
+  // }
 }
 
 function viewResultsB(event) {
   let clickedB = event.target.id;
   if (clickedB === 'clicked') {
-    showResults();
-    container.removeEventListener('click', viewResultsB);
+    calculateResults();
+    makeAChart();
+    main.removeEventListener('click', viewResultsB);
+
   }
 
 }
+// function arrayThisProperty(array, x) {
+//   let arrayReturn = [];
+//   for (let i = o; i < array.length; i++) {
+//     arrayReturn.push(array[i].x);
+//   }
+//   return arrayReturn;
+// }
+
+
 // run it
 
 new Product('dragon', 'img/dragon.jpg');
@@ -153,3 +164,50 @@ assignImg();
 // display results
 container.addEventListener('click', clicksPic);
 main.addEventListener('click', viewResultsB);
+
+// chart life https://www.chartjs.org/docs/latest/
+
+
+function makeAChart() {
+  let viewReturn = [];
+  let nameReturn = [];
+  let clickReturn = [];
+  for (let i = 0; i < allProducts.length; i++) {
+    clickReturn.push(allProducts[i].clicked);
+  }
+  for (let i = 0; i < allProducts.length; i++) {
+    viewReturn.push(allProducts[i].views);
+  }
+  for (let i = 0; i < allProducts.length; i++) {
+    nameReturn.push(allProducts[i].name);
+  }
+  var ctx = document.getElementById('myChart').getContext('2d');
+  var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: nameReturn,
+      datasets: [{
+        label: '# of Clicks',
+        data: clickReturn,
+        backgroundColor: 'rgba(153, 102, 255, 1)',
+        borderColor: 'white',
+      }, {
+        label: '# of Views',
+        data: viewReturn,
+        backgroundColor: 'rgba(153, 20, 25, 10)',
+        borderWidth: 1,
+      }]
+    },
+    options: {
+      responsive: false,
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      }
+    }
+  });
+}
+

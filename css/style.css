@@ -34,3 +34,7 @@ h3{
   font-size: 18px;
   padding:20px;
 }
+canvas{
+  margin-left: auto;
+  margin-right: auto;
+}
