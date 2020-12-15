@@ -1,0 +1,36 @@
+body{
+  background-color: black;
+color: white;
+}
+h1{
+  font-size: 3em;
+  text-align: center;
+  margin: 30px;
+  
+}
+h2{
+  font-size: 2em;
+  text-align: center;
+  margin: 30px;
+}
+section{
+  width: 960px;
+  margin-top: 30px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img{
+  width: 250px;
+  border: 2px solid white;
+}
+ul{
+  text-align: center;
+  margin-top: 30px;
+}
+h3{
+  border: white solid 3px;
+  margin-top: 30px;
+  text-align: center;
+  font-size: 18px;
+  padding:20px;
+}
