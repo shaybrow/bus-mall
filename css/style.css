@@ -18,8 +18,10 @@ section{
   margin-top: 30px;
   margin-left: auto;
   margin-right: auto;
+  height: 300px;
 }
 img{
+  height: 250px;
   width: 250px;
   border: 2px solid white;
 }
