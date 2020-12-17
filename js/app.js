@@ -8,17 +8,8 @@ let notNext = [];
 let totalClicks = 0;
 let maxClicks = 25;
 let container = document.getElementById('stuff');
-// let img1 = document.getElementById('img-1');
-// let img2 = document.getElementById('img-2');
-// let img3 = document.getElementById('img-3');
-// let img1 = document.createElement('img');
-let results = document.getElementById('results');
 let main = document.getElementById('container-parent');
 let picsDisplayed = 3;
-
-
-
-// is product unique
 
 // all products constructor
 function Product(name, imgSrc) {
@@ -26,7 +17,6 @@ function Product(name, imgSrc) {
   this.name = name;
   this.src = imgSrc;
   this.views = 0;
-
 
   allProducts.push(this);
 }
@@ -36,26 +26,6 @@ function randomNum(max) {
 }
 
 function assignImg() {
-  // let productNumber = randomNum(allProducts.length);
-  // allProducts[productNumber].views++;
-  // img1.src = allProducts[productNumber].src;
-  // img1.title = allProducts[productNumber].name;
-  // notNext.unshift(allProducts[productNumber]);
-  // allProducts.splice([productNumber], 1);
-
-  // let productNumber2 = randomNum(allProducts.length);
-  // allProducts[productNumber2].views++;
-  // img2.src = allProducts[productNumber2].src;
-  // img2.title = allProducts[productNumber2].name;
-  // notNext.unshift(allProducts[productNumber2]);
-  // allProducts.splice([productNumber2], 1);
-
-  // let productNumber3 = randomNum(allProducts.length);
-  // allProducts[productNumber3].views++;
-  // img3.src = allProducts[productNumber3].src;
-  // img3.title = allProducts[productNumber3].name;
-  // notNext.unshift(allProducts[productNumber3]);
-  // allProducts.splice([productNumber3], 1);
   imgPrinter(picsDisplayed);
 
   for (let i = notNext.length; i > picsDisplayed; i--) {
@@ -94,7 +64,8 @@ function clicksPic(event) {
   totalClicks++;
   if (totalClicks === maxClicks) {
     container.innerHTML = '';
-    calculateResults();
+    container.removeEventListener('click', clicksPic);
+    // calculateResults();
   }
   else {
     container.innerHTML = '';
@@ -106,6 +77,7 @@ function clicksPic(event) {
 function calculateResults() {
   container.removeEventListener('click', clicksPic);
   for (let k = 0; k < notNext.length; k++) {
+    console.log(notNext);
     allProducts.push(notNext[k]);
   }
   // save data to local storage here
@@ -129,14 +101,6 @@ function viewResultsB(event) {
   }
 
 }
-// function arrayThisProperty(array, x) {
-//   let arrayReturn = [];
-//   for (let i = o; i < array.length; i++) {
-//     arrayReturn.push(array[i].x);
-//   }
-//   return arrayReturn;
-// }
-
 
 // run it
 let grabProducts = localStorage.getItem('products');
@@ -166,12 +130,11 @@ if (grabProducts) {
   new Product('wine-glass', 'img/wine-glass.jpg');
 }
 
-assignImg();
+
 
 // remove listener
 // display results
-container.addEventListener('click', clicksPic);
-main.addEventListener('click', viewResultsB);
+
 
 // chart life https://www.chartjs.org/docs/latest/
 
@@ -218,4 +181,6 @@ function makeAChart() {
     }
   });
 }
-
+assignImg();
+container.addEventListener('click', clicksPic);
+main.addEventListener('click', viewResultsB);
