@@ -2,7 +2,6 @@
 
 
 // global var
-// product array
 let allProducts = [];
 let notNext = [];
 let totalClicks = 0;
@@ -20,11 +19,12 @@ function Product(name, imgSrc) {
 
   allProducts.push(this);
 }
-
+// random product out of available products function
 function randomNum(max) {
   return Math.floor(Math.random() * Math.floor(max));
 }
 
+// print images based on how picDisplayed var
 function assignImg() {
   imgPrinter(picsDisplayed);
 
@@ -35,6 +35,8 @@ function assignImg() {
   }
 
 }
+
+// iterates through, adding images
 function imgPrinter(times) {
   let productNumber;
   for (let i = 0; i < times; i++) {
@@ -50,12 +52,9 @@ function imgPrinter(times) {
   }
 }
 
-
+// event function for clicking on picture
 function clicksPic(event) {
-
-  // console.log(event);
   let clickedP = event.target.title;
-
   for (let i = 0; i < notNext.length; i++) {
     if (clickedP === notNext[i].name) {
       notNext[i].clicked++;
@@ -74,20 +73,7 @@ function clicksPic(event) {
 
 }
 
-function calculateResults() {
-  container.removeEventListener('click', clicksPic);
-  for (let k = 0; k < notNext.length; k++) {
-    console.log(notNext);
-    allProducts.push(notNext[k]);
-  }
-  // save data to local storage here
-}
-
-function stringyLocal() {
-  let stringProducts = JSON.stringify(allProducts);
-  localStorage.setItem('products', stringProducts);
-}
-
+// results box is click initiating  all local click and view history
 function viewResultsB(event) {
   let clickedB = event.target.id;
   if (clickedB === 'clicked') {
@@ -102,39 +88,20 @@ function viewResultsB(event) {
 
 }
 
-// run it
-let grabProducts = localStorage.getItem('products');
-if (grabProducts) {
-  allProducts = JSON.parse(grabProducts);
-} else {
-  new Product('dragon', 'img/dragon.jpg');
-  new Product('bag', 'img/bag.jpg');
-  new Product('banana', 'img/banana.jpg');
-  new Product('bathroom', 'img/bathroom.jpg');
-  new Product('boots', 'img/boots.jpg');
-  new Product('breakfast', 'img/breakfast.jpg');
-  new Product('bubblegum', 'img/bubblegum.jpg');
-  new Product('chair', 'img/chair.jpg');
-  new Product('cthulhu', 'img/cthulhu.jpg');
-  new Product('dog-duck', 'img/dog-duck.jpg');
-
-  new Product('pen', 'img/pen.jpg');
-  new Product('pet-sweep', 'img/pet-sweep.jpg');
-  new Product('scissors', 'img/scissors.jpg');
-  new Product('shark', 'img/shark.jpg');
-  new Product('sweep', 'img/sweep.png');
-  new Product('tauntaun', 'img/tauntaun.jpg');
-  new Product('unicorn', 'img/unicorn.jpg');
-  new Product('usb', 'img/usb.gif');
-  new Product('water-can', 'img/water-can.jpg');
-  new Product('wine-glass', 'img/wine-glass.jpg');
+//math's out results making sure all products are back in array
+function calculateResults() {
+  container.removeEventListener('click', clicksPic);
+  for (let k = 0; k < notNext.length; k++) {
+    console.log(notNext);
+    allProducts.push(notNext[k]);
+  }
 }
 
-
-
-// remove listener
-// display results
-
+// save data to localStorage
+function stringyLocal() {
+  let stringProducts = JSON.stringify(allProducts);
+  localStorage.setItem('products', stringProducts);
+}
 
 // chart life https://www.chartjs.org/docs/latest/
 
@@ -181,6 +148,36 @@ function makeAChart() {
     }
   });
 }
+
+// checks and grabs localStor or instantiates products
+let grabProducts = localStorage.getItem('products');
+if (grabProducts) {
+  allProducts = JSON.parse(grabProducts);
+} else {
+  new Product('dragon', 'img/dragon.jpg');
+  new Product('bag', 'img/bag.jpg');
+  new Product('banana', 'img/banana.jpg');
+  new Product('bathroom', 'img/bathroom.jpg');
+  new Product('boots', 'img/boots.jpg');
+  new Product('breakfast', 'img/breakfast.jpg');
+  new Product('bubblegum', 'img/bubblegum.jpg');
+  new Product('chair', 'img/chair.jpg');
+  new Product('cthulhu', 'img/cthulhu.jpg');
+  new Product('dog-duck', 'img/dog-duck.jpg');
+
+  new Product('pen', 'img/pen.jpg');
+  new Product('pet-sweep', 'img/pet-sweep.jpg');
+  new Product('scissors', 'img/scissors.jpg');
+  new Product('shark', 'img/shark.jpg');
+  new Product('sweep', 'img/sweep.png');
+  new Product('tauntaun', 'img/tauntaun.jpg');
+  new Product('unicorn', 'img/unicorn.jpg');
+  new Product('usb', 'img/usb.gif');
+  new Product('water-can', 'img/water-can.jpg');
+  new Product('wine-glass', 'img/wine-glass.jpg');
+}
+
+// displays starting imgs and adds event listeners
 assignImg();
 container.addEventListener('click', clicksPic);
 main.addEventListener('click', viewResultsB);
